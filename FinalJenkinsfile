@@ -10,16 +10,18 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t vaibhav0555alt/myprojectnew:v1 .'
-                    sh 'docker images'
+                    sh ' sudo docker build -t vaibhav0555alt/myprojectnew:v1 .'
+                    sh 'sudo docker images'
+                    echo"Image created"
                 }
             }
         }
           stage('Docker login') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-pwd', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                    sh "echo $PASS | docker login -u $USER --password-stdin"
-                    sh 'docker push vaibhav0555alt/myprojectnew:v1'
+                    sh "echo $PASS | sudo docker login -u $USER --password-stdin"
+                    sh 'sudo docker push vaibhav0555alt/myprojectnew:v1'
+                    echo"Login sucessfull"
                 }
             }
         }
